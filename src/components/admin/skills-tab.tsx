@@ -8,8 +8,7 @@ import { deleteSkillCategory } from "@/lib/cv/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { SkillCategoryForm } from "@/components/admin/skill-category-form";
-import { AddButton } from "@/components/admin/add-button";
-import { EditButton } from "@/components/admin/edit-button";
+import { FormDialog } from "@/components/admin/form-dialog";
 
 export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
   const router = useRouter();
@@ -28,9 +27,15 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
 
   return (
     <div className="mt-4 space-y-3">
-      <AddButton label="+ Nieuwe categorie" id="new" open={open} setOpen={setOpen}>
+      <FormDialog
+        trigger={<Button variant="outline">+ Nieuwe categorie</Button>}
+        title="+ Nieuwe categorie"
+        id="new"
+        open={open}
+        setOpen={setOpen}
+      >
         <SkillCategoryForm onSaved={() => { setOpen(null); router.refresh(); }} />
-      </AddButton>
+      </FormDialog>
 
       {skills.map((group) => (
         <Card key={group.category}>
@@ -40,12 +45,18 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
               <p className="text-xs text-muted-foreground">{group.items.join(", ")}</p>
             </div>
             <div className="flex gap-2">
-              <EditButton id={group.category} open={open} setOpen={setOpen}>
+              <FormDialog
+                trigger={<Button size="sm">Bewerk</Button>}
+                title="Bewerken"
+                id={group.category}
+                open={open}
+                setOpen={setOpen}
+              >
                 <SkillCategoryForm
                   group={group}
                   onSaved={() => { setOpen(null); router.refresh(); }}
                 />
-              </EditButton>
+              </FormDialog>
               <Button variant="outline" size="sm" onClick={() => handleDelete(group.category)}>
                 Verwijder
               </Button>

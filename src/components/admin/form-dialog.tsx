@@ -5,14 +5,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 
-export function EditButton({
+export function FormDialog({
+  trigger,
+  title,
   id,
   open,
   setOpen,
   children,
 }: {
+  trigger: React.ReactElement;
+  title: string;
   id: string;
   open: string | null;
   setOpen: (id: string | null) => void;
@@ -20,10 +23,10 @@ export function EditButton({
 }) {
   return (
     <Dialog open={open === id} onOpenChange={(next) => setOpen(next ? id : null)}>
-      <DialogTrigger render={<Button size="sm">Bewerk</Button>} />
+      <DialogTrigger render={trigger} />
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Bewerken</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         {children}
       </DialogContent>

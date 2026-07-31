@@ -8,8 +8,7 @@ import { deleteCertification } from "@/lib/cv/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CertificationForm } from "@/components/admin/certification-form";
-import { AddButton } from "@/components/admin/add-button";
-import { EditButton } from "@/components/admin/edit-button";
+import { FormDialog } from "@/components/admin/form-dialog";
 
 export function CertificationsTab({ certifications }: { certifications: Certification[] }) {
   const router = useRouter();
@@ -28,9 +27,15 @@ export function CertificationsTab({ certifications }: { certifications: Certific
 
   return (
     <div className="mt-4 space-y-3">
-      <AddButton label="+ Nieuw certificaat" id="new" open={open} setOpen={setOpen}>
+      <FormDialog
+        trigger={<Button variant="outline">+ Nieuw certificaat</Button>}
+        title="+ Nieuw certificaat"
+        id="new"
+        open={open}
+        setOpen={setOpen}
+      >
         <CertificationForm onSaved={() => { setOpen(null); router.refresh(); }} />
-      </AddButton>
+      </FormDialog>
 
       {certifications.map((cert) => (
         <Card key={cert.id}>
@@ -42,12 +47,18 @@ export function CertificationsTab({ certifications }: { certifications: Certific
               </p>
             </div>
             <div className="flex gap-2">
-              <EditButton id={cert.id} open={open} setOpen={setOpen}>
+              <FormDialog
+                trigger={<Button size="sm">Bewerk</Button>}
+                title="Bewerken"
+                id={cert.id}
+                open={open}
+                setOpen={setOpen}
+              >
                 <CertificationForm
                   certification={cert}
                   onSaved={() => { setOpen(null); router.refresh(); }}
                 />
-              </EditButton>
+              </FormDialog>
               <Button variant="outline" size="sm" onClick={() => handleDelete(cert.id)}>
                 Verwijder
               </Button>

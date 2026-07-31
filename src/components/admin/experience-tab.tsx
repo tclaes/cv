@@ -8,8 +8,7 @@ import { deleteJob } from "@/lib/cv/actions";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { JobForm } from "@/components/admin/job-form";
-import { AddButton } from "@/components/admin/add-button";
-import { EditButton } from "@/components/admin/edit-button";
+import { FormDialog } from "@/components/admin/form-dialog";
 
 export function ExperienceTab({ jobs }: { jobs: Job[] }) {
   const router = useRouter();
@@ -28,9 +27,15 @@ export function ExperienceTab({ jobs }: { jobs: Job[] }) {
 
   return (
     <div className="mt-4 space-y-3">
-      <AddButton label="+ Nieuwe werkervaring" id="new" open={open} setOpen={setOpen}>
+      <FormDialog
+        trigger={<Button variant="outline">+ Nieuwe werkervaring</Button>}
+        title="+ Nieuwe werkervaring"
+        id="new"
+        open={open}
+        setOpen={setOpen}
+      >
         <JobForm onSaved={() => { setOpen(null); router.refresh(); }} />
-      </AddButton>
+      </FormDialog>
 
       {jobs.map((job) => (
         <Card key={job.id}>
@@ -44,9 +49,15 @@ export function ExperienceTab({ jobs }: { jobs: Job[] }) {
               </p>
             </div>
             <div className="flex gap-2">
-              <EditButton id={job.id} open={open} setOpen={setOpen}>
+              <FormDialog
+                trigger={<Button size="sm">Bewerk</Button>}
+                title="Bewerken"
+                id={job.id}
+                open={open}
+                setOpen={setOpen}
+              >
                 <JobForm job={job} onSaved={() => { setOpen(null); router.refresh(); }} />
-              </EditButton>
+              </FormDialog>
               <Button variant="outline" size="sm" onClick={() => handleDelete(job.id)}>
                 Verwijder
               </Button>
