@@ -2,7 +2,6 @@ export type Visibility = "public" | "private";
 
 export interface ContactInfo {
   location: string;
-  phone: string;
   email: string;
   linkedin: string;
 }

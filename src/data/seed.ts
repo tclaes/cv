@@ -13,7 +13,6 @@ export const seed: CvData = {
       "Front-end specialist met bijna 9 jaar ervaring in het ontwerpen en implementeren van schaalbare, enterprise-grade weboplossingen. Diepgaande expertise in Angular, TypeScript, RxJS en Svelte, met een sterke focus op design systems, geautomatiseerd testen en web accessibility. Werkt graag samen met designers en developers in Agile/Scrum-teams om moderne platformen te bouwen die consistentie, kwaliteit en impact leveren.",
     contact: {
       location: "Beringen, België",
-      phone: "+32 478 29 93 50",
       email: "tom.claes82@gmail.com",
       linkedin: "https://www.linkedin.com/in/tclaes",
     },

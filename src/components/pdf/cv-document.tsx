@@ -64,7 +64,7 @@ export function CvDocument({ data }: { data: CvData }) {
         <Text style={styles.name}>{profile.name}</Text>
         <Text style={styles.headline}>{profile.headline}</Text>
         <Text style={styles.contact}>
-          {profile.contact.location} · {profile.contact.email} · {profile.contact.phone} ·{" "}
+          {profile.contact.location} · {profile.contact.email} ·{" "}
           {profile.contact.linkedin.replace("https://", "")}
         </Text>
 

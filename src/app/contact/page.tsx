@@ -24,15 +24,6 @@ export default async function ContactPage() {
             </a>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">Telefoon</span>
-            <a
-              className="text-sm font-medium hover:underline"
-              href={`tel:${profile.contact.phone.replace(/\s/g, "")}`}
-            >
-              {profile.contact.phone}
-            </a>
-          </div>
-          <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">Locatie</span>
             <span className="text-sm font-medium">{profile.contact.location}</span>
           </div>

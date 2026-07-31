@@ -30,7 +30,7 @@ export default async function CvPage() {
       </div>
 
       <p className="mt-2 text-sm text-muted-foreground">
-        {profile.contact.location} · {profile.contact.email} · {profile.contact.phone}
+        {profile.contact.location} · {profile.contact.email}
       </p>
 
       <Separator className="my-8" />
