@@ -21,7 +21,7 @@ import type {
  */
 function sortCertificationsByDate(certifications: Certification[]): Certification[] {
   const sortKey = (value: string) => {
-    if (/^\d{4}-\d{2}$/.test(value)) return value;
+    if (/^\d{4}-(0[1-9]|1[0-2])$/.test(value)) return value;
     if (/^\d{4}$/.test(value)) return `${value}-00`;
     return "";
   };
