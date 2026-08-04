@@ -83,6 +83,9 @@ function serializeProfile(data: CvData): string {
     "Opleiding & certificaten:",
     ...education.map((e) => `- ${e.title} (${e.institution}, ${e.period})`),
     ...certifications.map((c) => `- ${c.title} (${c.issuer}, ${c.date})`),
+    "",
+    "Talen:",
+    ...profile.languages.map((l) => `- ${l.language}: ${l.level}`),
   ].join("\n");
 }
 
