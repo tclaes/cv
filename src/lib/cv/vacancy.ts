@@ -5,6 +5,7 @@ import { isIP } from "node:net";
 const MAX_CHARS = 8000;
 const MAX_RESPONSE_BYTES = 2_000_000;
 const FETCH_TIMEOUT_MS = 10_000;
+const MAX_REDIRECTS = 5;
 
 function isPrivateOrReservedIp(ip: string): boolean {
   const family = isIP(ip);
@@ -45,12 +46,28 @@ export async function fetchVacancyText(rawUrl: string): Promise<string> {
   } catch {
     throw new Error("Ongeldige vacature-URL.");
   }
-  await assertSafeUrl(url);
-
-  const res = await fetch(url, {
-    headers: { "User-Agent": "Mozilla/5.0 (compatible; cv-app/1.0)" },
-    signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
-  });
+  let res: Response;
+  for (let hop = 0; ; hop++) {
+    await assertSafeUrl(url);
+    res = await fetch(url, {
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; cv-app/1.0)" },
+      signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+      redirect: "manual",
+    });
+    if (res.status < 300 || res.status >= 400) break;
+    if (hop >= MAX_REDIRECTS) {
+      throw new Error("Te veel doorverwijzingen bij het ophalen van de vacaturepagina.");
+    }
+    const location = res.headers.get("location");
+    if (!location) {
+      throw new Error("Ongeldige doorverwijzing bij het ophalen van de vacaturepagina.");
+    }
+    try {
+      url = new URL(location, url);
+    } catch {
+      throw new Error("Ongeldige doorverwijzing bij het ophalen van de vacaturepagina.");
+    }
+  }
   if (!res.ok) {
     throw new Error(`Kon vacaturepagina niet ophalen (HTTP ${res.status}).`);
   }
