@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { isFirebaseAdminConfigured, getAdminDb } from "@/lib/firebase/admin";
 import { seed } from "@/data/seed";
 import type {
@@ -17,7 +18,7 @@ import type {
  * Firebase Admin isn't configured yet, so the app is fully runnable before Tom
  * provisions a Firebase project (see .env.example).
  */
-export async function getCvData(): Promise<CvData> {
+export const getCvData = cache(async (): Promise<CvData> => {
   if (!isFirebaseAdminConfigured) {
     return seed;
   }
@@ -46,7 +47,7 @@ export async function getCvData(): Promise<CvData> {
     projects: projectsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project),
     skills: skillsSnap.docs.map((d) => d.data() as SkillCategory),
   };
-}
+});
 
 export async function getPublicProjects(): Promise<Project[]> {
   const { projects } = await getCvData();
