@@ -5,6 +5,7 @@ import type { CvData } from "@/types/cv";
 export const isGeminiConfigured = Boolean(process.env.GEMINI_API_KEY);
 
 const MODEL = "gemini-3.5-flash";
+const REQUEST_TIMEOUT_MS = 30_000;
 
 export interface AtsMatchResult {
   keyword: string;
@@ -135,6 +136,7 @@ Antwoord uitsluitend met het gevraagde JSON-object.`;
     config: {
       responseMimeType: "application/json",
       responseSchema,
+      httpOptions: { timeout: REQUEST_TIMEOUT_MS },
     },
   });
 
