@@ -88,10 +88,16 @@ export function JobForm({ job, onSaved }: { job?: Job; onSaved: () => void }) {
         <div className="space-y-1.5">
           <Label htmlFor="periodStart">Start (YYYY-MM)</Label>
           <Input id="periodStart" placeholder="2021-08" {...register("periodStart")} />
+          {errors.periodStart && (
+            <p className="text-xs text-destructive">{errors.periodStart.message}</p>
+          )}
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="periodEnd">Einde (YYYY-MM of &quot;heden&quot;)</Label>
           <Input id="periodEnd" placeholder="heden" {...register("periodEnd")} />
+          {errors.periodEnd && (
+            <p className="text-xs text-destructive">{errors.periodEnd.message}</p>
+          )}
         </div>
       </div>
       <div className="space-y-1.5">

@@ -89,6 +89,9 @@ export function ProjectForm({ project, onSaved }: { project?: Project; onSaved: 
         <div className="space-y-1.5">
           <Label htmlFor="employer">Opdrachtgever</Label>
           <Input id="employer" {...register("employer")} />
+          {errors.employer && (
+            <p className="text-xs text-destructive">{errors.employer.message}</p>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-3 gap-4">

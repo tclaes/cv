@@ -62,6 +62,9 @@ export function CertificationForm({
         <div className="space-y-1.5">
           <Label htmlFor="issuer">Uitgever</Label>
           <Input id="issuer" {...register("issuer")} />
+          {errors.issuer && (
+            <p className="text-xs text-destructive">{errors.issuer.message}</p>
+          )}
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="date">Datum (YYYY-MM)</Label>
