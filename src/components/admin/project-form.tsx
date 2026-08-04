@@ -61,16 +61,20 @@ export function ProjectForm({ project, onSaved }: { project?: Project; onSaved: 
 
   async function onSubmit(values: ProjectFormValues) {
     try {
-      await saveProject({
+      const result = await saveProject({
         ...values,
         id: project?.id,
         bullets: parseBullets(values.bullets),
         tech: parseCsv(values.tech),
       });
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Project opgeslagen");
       onSaved();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Opslaan mislukt");
+    } catch {
+      toast.error("Opslaan mislukt");
     }
   }
 

@@ -33,11 +33,15 @@ export function SkillCategoryForm({
 
   async function onSubmit(values: SkillCategoryFormValues) {
     try {
-      await saveSkillCategory({ category: values.category, items: parseCsv(values.items) });
+      const result = await saveSkillCategory({ category: values.category, items: parseCsv(values.items) });
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Vaardighedencategorie opgeslagen");
       onSaved();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Opslaan mislukt");
+    } catch {
+      toast.error("Opslaan mislukt");
     }
   }
 

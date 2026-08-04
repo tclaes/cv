@@ -18,11 +18,15 @@ export function ProjectsTab({ projects }: { projects: Project[] }) {
   async function handleDelete(id: string) {
     if (!confirm("Dit project verwijderen?")) return;
     try {
-      await deleteProject(id);
+      const result = await deleteProject(id);
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Verwijderd");
       router.refresh();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Verwijderen mislukt");
+    } catch {
+      toast.error("Verwijderen mislukt");
     }
   }
 

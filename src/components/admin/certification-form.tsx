@@ -39,11 +39,15 @@ export function CertificationForm({
 
   async function onSubmit(values: CertificationFormValues) {
     try {
-      await saveCertification({ ...values, id: certification?.id });
+      const result = await saveCertification({ ...values, id: certification?.id });
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Certificaat opgeslagen");
       onSaved();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Opslaan mislukt");
+    } catch {
+      toast.error("Opslaan mislukt");
     }
   }
 

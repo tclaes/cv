@@ -17,11 +17,15 @@ export function ExperienceTab({ jobs }: { jobs: Job[] }) {
   async function handleDelete(id: string) {
     if (!confirm("Deze werkervaring verwijderen?")) return;
     try {
-      await deleteJob(id);
+      const result = await deleteJob(id);
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Verwijderd");
       router.refresh();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Verwijderen mislukt");
+    } catch {
+      toast.error("Verwijderen mislukt");
     }
   }
 

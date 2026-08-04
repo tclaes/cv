@@ -17,11 +17,15 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
   async function handleDelete(category: string) {
     if (!confirm("Deze categorie verwijderen?")) return;
     try {
-      await deleteSkillCategory(category);
+      const result = await deleteSkillCategory(category);
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Verwijderd");
       router.refresh();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Verwijderen mislukt");
+    } catch {
+      toast.error("Verwijderen mislukt");
     }
   }
 

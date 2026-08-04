@@ -17,11 +17,15 @@ export function CertificationsTab({ certifications }: { certifications: Certific
   async function handleDelete(id: string) {
     if (!confirm("Dit certificaat verwijderen?")) return;
     try {
-      await deleteCertification(id);
+      const result = await deleteCertification(id);
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Verwijderd");
       router.refresh();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Verwijderen mislukt");
+    } catch {
+      toast.error("Verwijderen mislukt");
     }
   }
 

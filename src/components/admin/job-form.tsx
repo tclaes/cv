@@ -47,16 +47,20 @@ export function JobForm({ job, onSaved }: { job?: Job; onSaved: () => void }) {
 
   async function onSubmit(values: JobFormValues) {
     try {
-      await saveJob({
+      const result = await saveJob({
         ...values,
         id: job?.id,
         bullets: parseBullets(values.bullets),
         skills: parseCsv(values.skills),
       });
+      if (!result.ok) {
+        toast.error(result.message);
+        return;
+      }
       toast.success("Werkervaring opgeslagen");
       onSaved();
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Opslaan mislukt");
+    } catch {
+      toast.error("Opslaan mislukt");
     }
   }
 
