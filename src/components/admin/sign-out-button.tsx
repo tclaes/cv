@@ -20,7 +20,9 @@ export function SignOutButton() {
       toast.error("Uitloggen mislukt. Probeer opnieuw.");
       return;
     }
-    await signOut(getClientAuth());
+    // Best-effort: the server session is already gone, so don't let a client-side
+    // Firebase cleanup failure block the redirect.
+    await signOut(getClientAuth()).catch(() => {});
     router.push("/login");
     router.refresh();
   }
