@@ -28,14 +28,14 @@ const responseSchema = {
   properties: {
     jobTitle: { type: Type.STRING },
     company: { type: Type.STRING },
-    atsScore: { type: Type.NUMBER },
+    atsScore: { type: Type.INTEGER, minimum: 0, maximum: 100 },
     atsReport: {
       type: Type.ARRAY,
       items: {
         type: Type.OBJECT,
         properties: {
           keyword: { type: Type.STRING },
-          weight: { type: Type.NUMBER },
+          weight: { type: Type.INTEGER, format: "enum", enum: ["1", "2", "3"] },
           status: { type: Type.STRING, enum: ["strong", "partial", "missing"] },
           foundIn: { type: Type.STRING },
         },
@@ -43,7 +43,7 @@ const responseSchema = {
       },
     },
     tailoredSummary: { type: Type.STRING },
-    tailoredSkills: { type: Type.ARRAY, items: { type: Type.STRING } },
+    tailoredSkills: { type: Type.ARRAY, items: { type: Type.STRING }, maxItems: "12" },
     motivationEmail: { type: Type.STRING },
   },
   required: [
