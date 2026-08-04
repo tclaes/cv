@@ -59,7 +59,7 @@ export function CvDocument({ data }: { data: CvData }) {
   const publicProjects = projects.filter((p) => p.visibility === "public");
 
   return (
-    <Document title={`Tom Claes - CV`} author={profile.name}>
+    <Document title={`${profile.name} - CV`} author={profile.name}>
       <Page size="A4" style={styles.page}>
         <Text style={styles.name}>{profile.name}</Text>
         <Text style={styles.headline}>{profile.headline}</Text>
