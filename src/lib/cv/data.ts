@@ -18,7 +18,7 @@ import type {
  * Firebase Admin isn't configured yet, so the app is fully runnable before Tom
  * provisions a Firebase project (see .env.example).
  */
-export const getCvData = cache(async (): Promise<CvData> => {
+async function loadCvData(): Promise<CvData> {
   if (!isFirebaseAdminConfigured) {
     return seed;
   }
@@ -47,7 +47,9 @@ export const getCvData = cache(async (): Promise<CvData> => {
     projects: projectsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project),
     skills: skillsSnap.docs.map((d) => d.data() as SkillCategory),
   };
-});
+}
+
+export const getCvData = cache(loadCvData);
 
 export async function getPublicProjects(): Promise<Project[]> {
   const { projects } = await getCvData();
