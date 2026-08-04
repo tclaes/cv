@@ -69,26 +69,6 @@ export interface SkillCategory {
   items: string[];
 }
 
-export interface CvVariant {
-  id: string;
-  vacancyUrl: string;
-  company: string;
-  jobTitle: string;
-  language: "nl" | "en" | "fr";
-  atsScore: number;
-  atsReport: AtsMatch[];
-  sections: Record<string, unknown>;
-  motivationEmail?: string;
-  createdAt: string;
-}
-
-export interface AtsMatch {
-  keyword: string;
-  weight: number;
-  status: "strong" | "partial" | "missing";
-  foundIn?: string;
-}
-
 export interface CvData {
   profile: Profile;
   experience: Job[];
