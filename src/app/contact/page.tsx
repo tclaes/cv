@@ -35,7 +35,7 @@ export default async function ContactPage() {
               target="_blank"
               rel="noreferrer"
             >
-              linkedin.com/in/tclaes
+              {profile.contact.linkedin.replace("https://", "")}
             </a>
           </div>
         </CardContent>
