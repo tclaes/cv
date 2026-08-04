@@ -147,7 +147,7 @@ export function CvDocument({ data }: { data: CvData }) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Kernvaardigheden</Text>
           {skills.map((group) => (
-            <View key={group.category} style={styles.skillGroup}>
+            <View key={group.id} style={styles.skillGroup}>
               <Text style={styles.skillCategory}>{group.category}</Text>
               <View style={styles.tagRow}>
                 {group.items.map((item) => (

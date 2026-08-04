@@ -137,7 +137,7 @@ export default async function CvPage() {
         </h2>
         <div className="mt-4 space-y-3">
           {skills.map((group) => (
-            <div key={group.category}>
+            <div key={group.id}>
               <p className="text-xs font-medium text-muted-foreground">{group.category}</p>
               <div className="mt-1 flex flex-wrap gap-1.5">
                 {group.items.map((item) => (
