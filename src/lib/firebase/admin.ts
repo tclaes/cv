@@ -38,4 +38,10 @@ export function getAdminAuth(): Auth {
   return getAuth(getAdminApp());
 }
 
-export const ADMIN_EMAIL = process.env.ADMIN_EMAIL ?? "tom.claes82@gmail.com";
+export function getAdminEmail(): string {
+  const email = process.env.ADMIN_EMAIL;
+  if (!email) {
+    throw new Error("ADMIN_EMAIL is not configured (see .env.example).");
+  }
+  return email;
+}
