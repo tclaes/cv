@@ -37,8 +37,10 @@ export default function LoginPage() {
     event.preventDefault();
     setError(null);
     setLoading(true);
+    let signedIn = false;
     try {
       const credential = await signInWithEmailAndPassword(getClientAuth(), email, password);
+      signedIn = true;
       const idToken = await credential.user.getIdToken();
       const res = await fetch("/api/auth/session", {
         method: "POST",
@@ -46,13 +48,20 @@ export default function LoginPage() {
         body: JSON.stringify({ idToken }),
       });
       if (!res.ok) {
-        await signOut(getClientAuth());
-        setError("Niet geautoriseerd voor het admin-gedeelte.");
+        await signOut(getClientAuth()).catch(() => {});
+        setError(
+          res.status === 401
+            ? "Niet geautoriseerd voor het admin-gedeelte."
+            : "Er ging iets mis bij het aanmelden. Probeer opnieuw."
+        );
         return;
       }
       router.push("/admin");
       router.refresh();
     } catch {
+      if (signedIn) {
+        await signOut(getClientAuth()).catch(() => {});
+      }
       setError("Inloggen mislukt. Controleer je e-mail en wachtwoord.");
     } finally {
       setLoading(false);
