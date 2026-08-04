@@ -8,11 +8,12 @@ export async function GET() {
   try {
     const data = await getCvData();
     const buffer = await renderToBuffer(<CvDocument data={data} />);
+    const filename = `${data.profile.name.replace(/[^a-zA-Z0-9]+/g, "_")}_CV.pdf`;
 
     return new Response(new Uint8Array(buffer), {
       headers: {
         "Content-Type": "application/pdf",
-        "Content-Disposition": 'attachment; filename="Tom_Claes_CV.pdf"',
+        "Content-Disposition": `attachment; filename="${filename}"`,
       },
     });
   } catch (error) {
