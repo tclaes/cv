@@ -139,5 +139,9 @@ Antwoord uitsluitend met het gevraagde JSON-object.`;
   if (!text) {
     throw new Error("Geen antwoord van Gemini ontvangen.");
   }
-  return JSON.parse(text) as TailoredCvResult;
+  try {
+    return JSON.parse(text) as TailoredCvResult;
+  } catch {
+    throw new Error("Gemini gaf geen geldige JSON terug.");
+  }
 }
