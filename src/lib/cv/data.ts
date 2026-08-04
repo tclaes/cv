@@ -14,13 +14,34 @@ import type {
 } from "@/types/cv";
 
 /**
+ * Newest first. Dates are ISO "YYYY-MM" strings, which sort correctly as plain
+ * strings; a year-only "YYYY" sorts just below that year's dated entries. Entries
+ * without a date (or with free text) go last, keeping their relative order. Sorting
+ * happens here rather than via Firestore orderBy so undated docs aren't dropped.
+ */
+function sortCertificationsByDate(certifications: Certification[]): Certification[] {
+  const sortKey = (value: string) => {
+    if (/^\d{4}-(0[1-9]|1[0-2])$/.test(value)) return value;
+    if (/^\d{4}$/.test(value)) return `${value}-00`;
+    return "";
+  };
+  return [...certifications].sort((a, b) => {
+    const aKey = sortKey(a.date ?? "");
+    const bKey = sortKey(b.date ?? "");
+    if (aKey && bKey) return bKey.localeCompare(aKey);
+    if (aKey !== bKey) return aKey ? -1 : 1;
+    return 0;
+  });
+}
+
+/**
  * Reads the full CV dataset. Falls back to the local seed (data/seed.ts) whenever
  * Firebase Admin isn't configured yet, so the app is fully runnable before Tom
  * provisions a Firebase project (see .env.example).
  */
 async function loadCvData(): Promise<CvData> {
   if (!isFirebaseAdminConfigured) {
-    return seed;
+    return { ...seed, certifications: sortCertificationsByDate(seed.certifications) };
   }
 
   const db = getAdminDb();
@@ -43,7 +64,9 @@ async function loadCvData(): Promise<CvData> {
     experience: experienceSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Job),
     earlierExperience: earlierSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as EarlierExperience),
     education: educationSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as EducationItem),
-    certifications: certsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Certification),
+    certifications: sortCertificationsByDate(
+      certsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Certification),
+    ),
     projects: projectsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Project),
     skills: skillsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as SkillCategory),
   };
