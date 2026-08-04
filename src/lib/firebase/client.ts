@@ -16,24 +16,21 @@ export const isFirebaseConfigured = Boolean(config.apiKey && config.projectId &&
 let db: Firestore | null = null;
 let auth: Auth | null = null;
 
-export function getClientDb(): Firestore {
+function getClientApp() {
   if (!isFirebaseConfigured) {
     throw new Error(
       "Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_* env vars (see .env.example)."
     );
   }
-  const app = getApps().length ? getApp() : initializeApp(config);
-  if (!db) db = getFirestore(app);
+  return getApps().length ? getApp() : initializeApp(config);
+}
+
+export function getClientDb(): Firestore {
+  if (!db) db = getFirestore(getClientApp());
   return db;
 }
 
 export function getClientAuth(): Auth {
-  if (!isFirebaseConfigured) {
-    throw new Error(
-      "Firebase is not configured. Set NEXT_PUBLIC_FIREBASE_* env vars (see .env.example)."
-    );
-  }
-  const app = getApps().length ? getApp() : initializeApp(config);
-  if (!auth) auth = getAuth(app);
+  if (!auth) auth = getAuth(getClientApp());
   return auth;
 }
