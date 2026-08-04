@@ -122,10 +122,10 @@ export async function saveSkillCategory(raw: unknown): Promise<ActionResult> {
   try {
     await assertAdmin();
     const data = skillCategorySchema.parse(raw);
+    const { id, ...fields } = data;
     const db = getAdminDb();
-    // Skill categories are keyed by their (slugified) category name.
-    const docId = data.category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    await db.collection("skills").doc(docId).set(data, { merge: false });
+    const ref = id ? db.collection("skills").doc(id) : db.collection("skills").doc();
+    await ref.set(fields, { merge: false });
     revalidateAll();
     return { ok: true };
   } catch (err) {
@@ -133,11 +133,10 @@ export async function saveSkillCategory(raw: unknown): Promise<ActionResult> {
   }
 }
 
-export async function deleteSkillCategory(category: string): Promise<ActionResult> {
+export async function deleteSkillCategory(id: string): Promise<ActionResult> {
   try {
     await assertAdmin();
-    const docId = category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    await getAdminDb().collection("skills").doc(docId).delete();
+    await getAdminDb().collection("skills").doc(id).delete();
     revalidateAll();
     return { ok: true };
   } catch (err) {

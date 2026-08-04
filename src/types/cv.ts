@@ -64,6 +64,7 @@ export interface Project {
 }
 
 export interface SkillCategory {
+  id: string;
   category: string;
   items: string[];
 }

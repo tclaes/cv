@@ -14,10 +14,10 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
   const router = useRouter();
   const [open, setOpen] = useState<string | null>(null);
 
-  async function handleDelete(category: string) {
+  async function handleDelete(id: string) {
     if (!confirm("Deze categorie verwijderen?")) return;
     try {
-      const result = await deleteSkillCategory(category);
+      const result = await deleteSkillCategory(id);
       if (!result.ok) {
         toast.error(result.message);
         return;
@@ -42,7 +42,7 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
       </FormDialog>
 
       {skills.map((group) => (
-        <Card key={group.category}>
+        <Card key={group.id}>
           <CardContent className="flex items-center justify-between gap-4 py-4">
             <div>
               <p className="text-sm font-medium">{group.category}</p>
@@ -52,7 +52,7 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
               <FormDialog
                 trigger={<Button size="sm">Bewerk</Button>}
                 title="Bewerken"
-                id={group.category}
+                id={group.id}
                 open={open}
                 setOpen={setOpen}
               >
@@ -61,7 +61,7 @@ export function SkillsTab({ skills }: { skills: SkillCategory[] }) {
                   onSaved={() => { setOpen(null); router.refresh(); }}
                 />
               </FormDialog>
-              <Button variant="outline" size="sm" onClick={() => handleDelete(group.category)}>
+              <Button variant="outline" size="sm" onClick={() => handleDelete(group.id)}>
                 Verwijder
               </Button>
             </div>

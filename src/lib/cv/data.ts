@@ -45,7 +45,7 @@ async function loadCvData(): Promise<CvData> {
     education: educationSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as EducationItem),
     certifications: certsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Certification),
     projects: projectsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project),
-    skills: skillsSnap.docs.map((d) => d.data() as SkillCategory),
+    skills: skillsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as SkillCategory),
   };
 }
 

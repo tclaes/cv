@@ -30,7 +30,7 @@ export const seed: CvData = {
       company: "we+ Benelux",
       location: "Hasselt, België (Hybride)",
       periodStart: "2021-08",
-      periodEnd: "heden",
+      periodEnd: "2026-02",
       bullets: [
         "Design en implementatie van schaalbare, enterprise-grade weboplossingen voor Benelux-klanten",
         "Bouwen en onderhouden van Angular-gebaseerde design systems met herbruikbare component libraries",
@@ -345,34 +345,42 @@ export const seed: CvData = {
 
   skills: [
     {
+      id: "frontend-frameworks-libraries",
       category: "Frontend Frameworks & Libraries",
       items: ["Angular", "Svelte", "React", "Vue.js", "Nuxt.js", "TypeScript", "JavaScript (ES6+)", "RxJS", "NgRx", "HTML5", "CSS3/SCSS", "Tailwind CSS", "Web Components"],
     },
     {
+      id: "web-standards-performance",
       category: "Web Standards & Performance",
       items: ["PWA", "ServiceWorker", "IndexedDB", "Responsive Web Design", "Accessibility (WCAG)", "Web Performance Optimization"],
     },
     {
+      id: "architecture-tooling",
       category: "Architecture & Tooling",
       items: ["Application Architecture", "Nx Monorepo", "Design Systems", "Component-based Architecture", "Storybook", "Git", "JIRA", "npm/yarn", "ESLint", "Prettier", "Vite", "Webpack", "Vuestorefront (Alokai)", "Headless Commerce"],
     },
     {
+      id: "testing",
       category: "Testing",
       items: ["Jest", "Cypress", "Vitest", "Automated Testing"],
     },
     {
+      id: "backend-data",
       category: "Backend & Data",
       items: ["SQL", "REST APIs", "GraphQL", "Drupal (frontend integration)", "Node.js", "Express.js", "Spring Boot (basic)"],
     },
     {
+      id: "cloud-devops",
       category: "Cloud & DevOps",
       items: ["Azure DevOps", "AWS (Certified Cloud Practitioner)", "Azure Fundamentals", "CI/CD", "Netlify", "Supabase", "Firebase"],
     },
     {
+      id: "methodologies",
       category: "Methodologies",
       items: ["Agile", "Scrum", "Atomic Design", "Figma", "Leadership"],
     },
     {
+      id: "ai",
       category: "AI",
       items: ["Anthropic Claude API", "GitHub Copilot", "AI-assisted development"],
     },

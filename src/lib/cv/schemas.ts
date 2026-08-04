@@ -50,6 +50,7 @@ export const certificationSchema = z.object({
 export type CertificationPayload = z.infer<typeof certificationSchema>;
 
 export const skillCategorySchema = z.object({
+  id: z.string().optional(),
   category: z.string().min(1),
   items: z.array(z.string()),
 });
@@ -93,6 +94,7 @@ export const certificationFormSchema = z.object({
 export type CertificationFormValues = z.infer<typeof certificationFormSchema>;
 
 export const skillCategoryFormSchema = z.object({
+  id: z.string().optional(),
   category: z.string().min(1, "Verplicht"),
   items: z.string(),
 });

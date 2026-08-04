@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 function toFormValues(group?: SkillCategory): SkillCategoryFormValues {
   if (!group) return { category: "", items: "" };
-  return { category: group.category, items: group.items.join(", ") };
+  return { id: group.id, category: group.category, items: group.items.join(", ") };
 }
 
 export function SkillCategoryForm({
@@ -33,7 +33,11 @@ export function SkillCategoryForm({
 
   async function onSubmit(values: SkillCategoryFormValues) {
     try {
-      const result = await saveSkillCategory({ category: values.category, items: parseCsv(values.items) });
+      const result = await saveSkillCategory({
+        id: group?.id,
+        category: values.category,
+        items: parseCsv(values.items),
+      });
       if (!result.ok) {
         toast.error(result.message);
         return;
