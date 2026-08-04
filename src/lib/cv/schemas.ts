@@ -45,7 +45,7 @@ export const certificationSchema = z.object({
   title: z.string().min(1),
   issuer: z.string().min(1),
   date: z.string().optional().default(""),
-  credentialUrl: z.string().optional(),
+  credentialUrl: z.union([z.httpUrl("Ongeldige URL"), z.literal("")]).optional(),
 });
 export type CertificationPayload = z.infer<typeof certificationSchema>;
 
@@ -89,7 +89,7 @@ export const certificationFormSchema = z.object({
   title: z.string().min(1, "Verplicht"),
   issuer: z.string().min(1, "Verplicht"),
   date: z.string().optional(),
-  credentialUrl: z.string().optional(),
+  credentialUrl: z.union([z.httpUrl("Ongeldige URL"), z.literal("")]).optional(),
 });
 export type CertificationFormValues = z.infer<typeof certificationFormSchema>;
 

@@ -74,6 +74,9 @@ export function CertificationForm({
       <div className="space-y-1.5">
         <Label htmlFor="credentialUrl">Credential URL (optioneel)</Label>
         <Input id="credentialUrl" {...register("credentialUrl")} />
+        {errors.credentialUrl && (
+          <p className="text-xs text-destructive">{errors.credentialUrl.message}</p>
+        )}
       </div>
       <Button type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Bezig..." : "Opslaan"}
