@@ -1,5 +1,7 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "tclaes-cv-app"
+  },
   "targets": {},
   "etags": {}
 }
