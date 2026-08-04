@@ -40,12 +40,12 @@ async function loadCvData(): Promise<CvData> {
 
   return {
     profile,
-    experience: experienceSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Job),
-    earlierExperience: earlierSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as EarlierExperience),
-    education: educationSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as EducationItem),
-    certifications: certsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Certification),
-    projects: projectsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as Project),
-    skills: skillsSnap.docs.map((d) => ({ id: d.id, ...d.data() }) as SkillCategory),
+    experience: experienceSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Job),
+    earlierExperience: earlierSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as EarlierExperience),
+    education: educationSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as EducationItem),
+    certifications: certsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Certification),
+    projects: projectsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as Project),
+    skills: skillsSnap.docs.map((d) => ({ ...d.data(), id: d.id }) as SkillCategory),
   };
 }
 
@@ -74,12 +74,12 @@ export async function getCvVariants(): Promise<CvVariantRecord[]> {
     .collection("cvVariants")
     .orderBy("createdAt", "desc")
     .get();
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }) as CvVariantRecord);
+  return snap.docs.map((d) => ({ ...d.data(), id: d.id }) as CvVariantRecord);
 }
 
 export async function getCvVariant(id: string): Promise<CvVariantRecord | null> {
   if (!isFirebaseAdminConfigured) return null;
   const doc = await getAdminDb().collection("cvVariants").doc(id).get();
   if (!doc.exists) return null;
-  return { id: doc.id, ...doc.data() } as CvVariantRecord;
+  return { ...doc.data(), id: doc.id } as CvVariantRecord;
 }
