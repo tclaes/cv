@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getCvData } from "@/lib/cv/data";
 import { computeYearsSince, formatRange } from "@/lib/format";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -35,13 +35,12 @@ export default async function HomePage() {
         <p className="text-xl text-muted-foreground">{profile.headline}</p>
         <p className="max-w-2xl text-muted-foreground">{profile.summary}</p>
         <div className="flex flex-wrap gap-3 pt-2">
-          <Button size="lg" nativeButton={false} render={<Link href="/cv">Bekijk CV</Link>} />
-          <Button
-            variant="outline"
-            size="lg"
-            nativeButton={false}
-            render={<Link href="/contact">Neem contact op</Link>}
-          />
+          <Link href="/cv" className={buttonVariants({ size: "lg" })}>
+            Bekijk CV
+          </Link>
+          <Link href="/contact" className={buttonVariants({ variant: "outline", size: "lg" })}>
+            Neem contact op
+          </Link>
         </div>
       </section>
 

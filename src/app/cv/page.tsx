@@ -1,7 +1,7 @@
 import { getCvData } from "@/lib/cv/data";
 import { formatRange } from "@/lib/format";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Download } from "lucide-react";
 
@@ -17,16 +17,10 @@ export default async function CvPage() {
           <h1 className="text-3xl font-semibold tracking-tight">{profile.name}</h1>
           <p className="text-muted-foreground">{profile.headline}</p>
         </div>
-        <Button
-          className="print:hidden"
-          nativeButton={false}
-          render={
-            <a href="/api/cv/pdf" download>
-              <Download className="mr-2 size-4" />
-              Download PDF
-            </a>
-          }
-        />
+        <a href="/api/cv/pdf" download className={buttonVariants({ className: "print:hidden" })}>
+          <Download className="mr-2 size-4" />
+          Download PDF
+        </a>
       </div>
 
       <p className="mt-2 text-sm text-muted-foreground">
