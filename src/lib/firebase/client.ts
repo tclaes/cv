@@ -11,7 +11,7 @@ const config: FirebaseOptions = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-export const isFirebaseConfigured = Boolean(config.apiKey && config.projectId);
+export const isFirebaseConfigured = Boolean(config.apiKey && config.projectId && config.authDomain);
 
 let db: Firestore | null = null;
 let auth: Auth | null = null;
