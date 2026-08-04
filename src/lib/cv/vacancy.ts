@@ -67,6 +67,7 @@ export async function fetchVacancyText(rawUrl: string): Promise<string> {
     } catch {
       throw new Error("Ongeldige doorverwijzing bij het ophalen van de vacaturepagina.");
     }
+    await res.body?.cancel();
   }
   if (!res.ok) {
     throw new Error(`Kon vacaturepagina niet ophalen (HTTP ${res.status}).`);
