@@ -61,8 +61,10 @@ export default function LoginPage() {
     } catch {
       if (signedIn) {
         await signOut(getClientAuth()).catch(() => {});
+        setError("Er ging iets mis bij het aanmelden. Probeer opnieuw.");
+      } else {
+        setError("Inloggen mislukt. Controleer je e-mail en wachtwoord.");
       }
-      setError("Inloggen mislukt. Controleer je e-mail en wachtwoord.");
     } finally {
       setLoading(false);
     }
