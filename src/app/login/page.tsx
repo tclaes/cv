@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { getClientAuth, isFirebaseConfigured } from "@/lib/firebase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,7 +46,9 @@ export default function LoginPage() {
         body: JSON.stringify({ idToken }),
       });
       if (!res.ok) {
-        throw new Error("Niet geautoriseerd voor het admin-gedeelte.");
+        await signOut(getClientAuth());
+        setError("Niet geautoriseerd voor het admin-gedeelte.");
+        return;
       }
       router.push("/admin");
       router.refresh();
